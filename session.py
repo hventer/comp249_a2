@@ -45,24 +45,28 @@ def get_or_create_session(db):
 def add_to_cart(db, itemid, quantity):
     """Add an item to the shopping cart"""
 
-    sessionkey = request.get_cookie(COOKIE_NAME)
+    sessionkey = get_or_create_session(db)
 
     sql = "SELECT data FROM sessions WHERE sessionid = ?"
     cursor = db.cursor()
     cursor.execute(sql, (sessionkey,))
-    existing = cursor.fetchone()
+    row = cursor.fetchone()
 
-    data = [itemid, quantity]
-    cursor = db.cursor()
-    data_j = json.dumps(data)
+    if row['data']:
+        data = [itemid, quantity]
+        olddata = json.loads(row['data'])
+        olddata.append(data)
+        data_j = json.dumps(olddata)
 
-
-    if existing == []:
-        sql = "INSERT INTO sessions (sessionid, data) VALUES (?, ?)"
-        cursor.execute(sql, [sessionkey, data_j])
-    else:
         sql = "UPDATE sessions SET data = ? WHERE sessionid = ?"
         cursor.execute(sql, [data_j, sessionkey])
+    else:
+        data = [[itemid, quantity]]
+        data_j = json.dumps(data)
+
+        sql = "UPDATE sessions SET data = ? WHERE sessionid = ?"
+        cursor.execute(sql, [data_j, sessionkey])
+
     db.commit()
 
 
@@ -71,31 +75,39 @@ def get_cart_contents(db):
     a list of dictionaries:
     [{'id': <id>, 'quantity': <qty>, 'name': <name>, 'cost': <cost>}, ...]
     """
-
-    sessionkey = request.get_cookie(COOKIE_NAME)
-
+    sessionkey = get_or_create_session(db)
 
     sql = "SELECT data FROM sessions WHERE sessionid = ?"
     cursor = db.cursor()
     cursor.execute(sql, (sessionkey,))
 
-    result = cursor.fetchone()
-    if result: #always goes into this, even when empty
-        data = json.loads(result['data'])
+    row = cursor.fetchone()
+    if row['data']:
+        list = json.loads(row['data'])
+        cart = []
 
-        sql = "SELECT name FROM products WHERE id = ?"
-        cursor = db.cursor()
-        cursor.execute(sql, (data[0],))
-        name = cursor.fetchone()
+        for item in list:
+            sql = "SELECT name FROM products WHERE id = ?"
+            cursor.execute(sql, (item[0],))
+            name = cursor.fetchone()
 
-        sql = "SELECT unit_cost FROM products WHERE id = ?"
-        cursor = db.cursor()
-        cursor.execute(sql, (data[0],))
-        cost = cursor.fetchone()
+            sql = "SELECT unit_cost FROM products WHERE id = ?"
+            cursor.execute(sql, (item[0],))
+            cost = cursor.fetchone()
 
-        data.append(name)
-        data.append(cost)
-        return data
+            id = item[0]
+            quantity = item[1]
+
+            item = {
+                'id': id,
+                'quantity': quantity,
+                'name': name,
+                'cost': cost
+            }
+
+            cart.append(item)
+
+        return cart
 
     else:
         return []
