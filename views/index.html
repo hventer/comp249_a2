@@ -2,4 +2,18 @@
 
 <h1>{{title}}</h1>
 
-<p>Your content goes here...</p>
+<p>
+
+<div class="productlist">
+% for item in products:
+
+    <div class="product">
+        <h2><a href="/product/{{item['id']}}">{{item['name']}}</a></h2>
+        <div class="image"><img src={{item['image_url']}} alt={{item['name']}}></div>
+        <div class="inventory"> {{item['inventory']}} in stock</div>
+        <div class="cost">${{item['unit_cost']}}</div>
+    </div>
+% end
+</div>
+
+</p>

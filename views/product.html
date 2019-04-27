@@ -1,0 +1,25 @@
+% rebase('base.html')
+
+
+
+<h1>{{product['name']}}</h1>
+
+<p>
+    <div>
+        <img src={{product['image_url']}} alt={{product['name']}}>
+    </div>
+    <div>
+        <ul>
+            <li>Cost: ${{product['unit_cost']}}</li>
+            <li>Inventory: {{product['inventory']}}</li>
+        </ul>
+    </div>
+    <p>{{!product['description']}}</p>
+     <div class="cart">
+         <form method='POST' action="/cart">
+             <input type="number" name="quantity" value="1">
+             <input type="hidden" name="product" value="1">
+             <input type="submit" value="Add to Cart">
+         </form>
+     </div>
+</p>
