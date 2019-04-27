@@ -40,11 +40,15 @@ def cart(db):
 
     cart = session.get_cart_contents(db)
 
+    total = 0
+    for item in cart:
+        total=total+item['cost']
+
     info = {
         'title': "Current Shopping Cart contents",
-        'cart': cart
+        'cart': cart,
+        'total': total
     }
-
     return template('cart', info)
 
 @app.post('/cart')
