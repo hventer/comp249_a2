@@ -18,7 +18,7 @@
      <div class="cart">
          <form method='POST' action="/cart">
              <input type="number" name="quantity" value="1">
-             <input type="hidden" name="product" value="1">
+             <input type="hidden" name="product" value={{product['id']}}>
              <input type="submit" value="Add to Cart">
          </form>
      </div>

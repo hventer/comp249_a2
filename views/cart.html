@@ -1,0 +1,29 @@
+% rebase('base.html')
+
+<h1>{{title}}</h1>
+
+<p>
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+
+% for item in cart:
+        <tr>
+            <td><a href="/product/{{item['id']}}">{{item['name']}}</a></td>
+            <td>{{item['quantity']}}</td>
+            <td>${{item['cost']}}</td>
+        </tr>
+% end
+        <tr>
+            <td>Total</td><td></td><td>$108.95</td></tr>
+        </tr>
+
+    </table>
+</div>
+</p>

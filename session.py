@@ -37,8 +37,7 @@ def get_or_create_session(db):
         cursor.execute(sql, (sessionkey,))
         db.commit()
 
-        response.set_cookie(COOKIE_NAME, sessionkey)
-
+        response.set_cookie(COOKIE_NAME, sessionkey, path='/')
     return sessionkey
 
 
@@ -87,16 +86,13 @@ def get_cart_contents(db):
         cart = []
 
         for item in list:
-            sql = "SELECT name FROM products WHERE id = ?"
-            cursor.execute(sql, (item[0],))
-            name = cursor.fetchone()
-
-            sql = "SELECT unit_cost FROM products WHERE id = ?"
-            cursor.execute(sql, (item[0],))
-            cost = cursor.fetchone()
+            product = model.product_get(db, item[0])
+            name = product['name']
+            cost = product['unit_cost']
 
             id = item[0]
-            quantity = item[1]
+            quantity = int(item[1])
+            cost = cost * float(quantity)
 
             item = {
                 'id': id,
