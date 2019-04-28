@@ -1,22 +1,27 @@
 html {
-    background-color: red;
-}
-
-body {
-    margin: 0;
+    font-family: "Lucinda Grande", "Lucinda Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+    background-image: url('background.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
 }
 
 .content {
     width: 80%;
     margin: auto;
-    background-color: pink;
 }
-header h1 {
-    font-family: cursive, sans-serif;
-    text-align: center;
-    background-color: #ffcc33;
-    margin: 0;
-    padding: 10px;
+
+h1 {
+
+}
+
+h2 a{
+    text-decoration: none;
+    color: white;
+}
+
+h2 a:hover {
+    color: lawngreen;
 }
 
 nav {
@@ -24,7 +29,24 @@ nav {
     height: 50px;
     margin: 0;
     padding: 0;
-    background-color: aquamarine;
+    background: rgba(60, 60, 60, .45);
+}
+#promo {
+    background-color: #888888;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+#promo ul {
+    list-style: none;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+}
+#promo li {
+    display: inline-block;
+    padding: 15px 5px;
+    font-variant: small-caps;
 }
 
 nav ul {
@@ -33,6 +55,8 @@ nav ul {
     text-align: center;
     padding: 0;
     margin: 0;
+    text-decoration: none;
+    color: white;
 }
 
 nav li {
@@ -42,5 +66,77 @@ nav li {
 }
 
 nav li:hover {
-    background-color: red;
+    background: white;
+    color: black;
+    cursor: pointer;
+}
+
+nav .account-menu {
+    display: inline-block;
+    float: right;
+}
+
+nav #product-search-form {
+    display: inline-block;
+    float: right;
+    padding: 15px 5px;
+}
+
+.featured img {
+    width: 100%;
+}
+.featured .description {
+    position: relative;
+    top: -300px;
+    left: 100px;
+    width: 200px;
+    font-family: "American Typewriter";
+    font-size: larger;
+    font-weight: bold;
+    color: #888;
+    background-color: #ffffff;
+    padding: 5px;
+}
+
+.featured .product-detail {
+    background-color: bisque;
+    display: flex;
+}
+
+.featured .product-detail * {
+    flex: 1;
+}
+
+.productlist {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.product {
+    flex: 1;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 10px;
+    width: 250px;
+    background: rgba(60, 60, 60, .45);
+
+}
+
+.product .image img {
+    width: 250px;
+}
+
+#debuginfox {
+    display: none
+}
+
+#special-offer {
+    background-color: aqua;
+    font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    font-size: 30pt;
+    padding: 10px;
+    margin: 10px;
+    width: 100%;
+    text-align: center;
 }
